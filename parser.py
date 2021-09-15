@@ -1,12 +1,13 @@
-#imports regexp lib that will be used to count requests from years 1994 and 1995.
+#imports regexp module that will be used to count requests from years 1994 and 1995.
 import re
 
-#imports csv lib that will be used to show results.
+#imports csv module that will be used to show results.
 import csv
 
-#imports counter library used to help write content for csv files and count.
+#imports counter module used to help write content for csv files and count.
 from collections import Counter
 
+#Reads log file and finds all 1994 requests
 def reader(filename):
     with open(filename) as f:
         http_access_log = f.read()
@@ -14,20 +15,24 @@ def reader(filename):
         firstyear = re.findall("1994", http_access_log)
 
         return(firstyear)
-
+    
+#Reads log file and finds all 1995 requests
 def reader2(filename):
     with open(filename) as f:
         http_access_log = f.read()
 
         secondyear = re.findall("1995", http_access_log)
         return(secondyear)
-
+    
+#Counts 1994 requests
 def count(firstyear):
     return Counter(firstyear)
 
+#Counts 1995 requests
 def count2(secondyear):
     return Counter(secondyear)
 
+#creates csv file for 1994
 def write_csv(counter):
     with open("1994.csv", "w") as csvfile:
         writer = csv.writer(csvfile)
@@ -38,7 +43,8 @@ def write_csv(counter):
 
         for item in counter:
             writer.writerow( (item, counter[item]) )
-
+            
+#creates csv file for 1995
 def write_csv2(counter2):
     with open("1995.csv", "w") as csvfile:
         writer = csv.writer(csvfile)
