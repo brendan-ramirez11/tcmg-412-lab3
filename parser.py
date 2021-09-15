@@ -1,4 +1,3 @@
-#open log file
 
 import re
 import csv
