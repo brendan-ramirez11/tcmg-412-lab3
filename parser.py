@@ -1,6 +1,10 @@
-
+#imports regexp lib that will be used to count requests from years 1994 and 1995.
 import re
+
+#imports csv lib that will be used to show results.
 import csv
+
+#imports counter library used to help write content for csv files and count.
 from collections import Counter
 
 def reader(filename):
