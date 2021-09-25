@@ -7,12 +7,10 @@ import csv
 #imports counter module used to count and subsequently write number of requests to csv files
 from collections import Counter
 
-#imports module needed to fetch web data
-import urllib.request
-
 #Fetches data
-url = "https://s3.amazonaws.com/tcmg476/http_access_log"
-urllib.request.urlretrieve(url, "http_access_log")
+import urllib.request
+url = 'https://s3.amazonaws.com/tcmg476/http_access_log'
+urllib.request.urlretrieve(url,'./http_access_log.txt')
 
 #Reads log file and finds all 1994 requests
 def reader(filename):
