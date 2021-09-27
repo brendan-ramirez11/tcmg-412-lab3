@@ -8,9 +8,9 @@ import csv
 from collections import Counter
 
 #Fetches data
-import urllib.request
-url = 'https://s3.amazonaws.com/tcmg476/http_access_log'
-urllib.request.urlretrieve(url,'./http_access_log.txt')
+#import urllib.request
+#url = 'https://s3.amazonaws.com/tcmg476/http_access_log'
+#urllib.request.urlretrieve(url,'./http_access_log.txt')
 
 #Reads log file and finds all 1994 requests
 def reader(filename):
@@ -28,6 +28,21 @@ def reader2(filename):
 
         secondyear = re.findall("1995", http_access_log)
         return(secondyear)
+
+#Reads log file and finds past 6 months 
+def reader3(filename):
+    with open(filename) as f:
+        http_access_log = f.read()
+
+        month1 = re.findall("May/1995", http_access_log)
+        month2 = re.findall("Jun/1995", http_access_log)
+        month3 = re.findall("Jul/1995", http_access_log)
+        month4 = re.findall("Aug/1995", http_access_log)
+        month5 = re.findall("Sep/1995", http_access_log)
+        month6 = re.findall("Oct/1995", http_access_log)
+        past_6_months_total = month1 + month2 + month3 + month4 + month5  + month6
+
+        return(past_6_months_total)       
     
 #Counts 1994 requests
 def count(firstyear):
@@ -36,6 +51,10 @@ def count(firstyear):
 #Counts 1995 requests
 def count2(secondyear):
     return Counter(secondyear)
+
+#Counts past 6 months:
+def count3(past_6_months_total):
+    return Counter(past_6_months_total)
 
 #creates csv file for 1994
 def write_csv(counter):
@@ -61,8 +80,21 @@ def write_csv2(counter2):
         for item in counter2:
             writer.writerow( (item, counter2[item]) )
 
+#creates csv file for past 6 months
+def write_csv3(counter3):
+    with open("6months.csv", "w") as csvfile:
+        writer = csv.writer(csvfile)
+
+        header = ["Past 6 Months", "Requests"]
+
+        writer.writerow(header)
+
+        for item in counter3:
+            writer.writerow( (item, counter3[item]) )
+
 
 if __name__ == "__main__":
     write_csv(count(reader("http_access_log.txt")))
     write_csv2(count2(reader2("http_access_log.txt")))
+    write_csv3(count3(reader3("http_access_log.txt")))
 
